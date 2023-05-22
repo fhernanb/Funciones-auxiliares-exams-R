@@ -12,7 +12,6 @@ gen_ans_01 <- function(x,
   if (min_ruido < 0.01) stop("El minimo es muy pequeno")
   if (any(c(min_ruido, max_ruido) < 0)) stop("Ruidos negativos")
   
-  #z <- runif(n=num_opciones, min=min_ruido, max=ruido)
   z <- seq(from=min_ruido, to=max_ruido, length.out=num_opciones)
   z <- jitter(z, factor=0.23)
   signos <- sample(c(-1, 1), size=num_opciones, replace=TRUE)
