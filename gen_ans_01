@@ -1,0 +1,25 @@
+# Esta funcion es para crear opciones entre 0 y 1
+# se le ingresa x = rta y ella entrega 3 opciones (by default)
+# mas, el primer valor del vector es la rta correcta
+# y los otros valores son incorrectos.
+
+gen_ans_01 <- function(x, 
+                       min_ruido=0.03, 
+                       max_ruido=0.10, 
+                       num_opciones=3) {
+  
+  if (max_ruido <= min_ruido) stop("El ruido esta incorrecto")
+  if (min_ruido < 0.01) stop("El minimo es muy pequeno")
+  if (any(c(min_ruido, max_ruido) < 0)) stop("Ruidos negativos")
+  
+  #z <- runif(n=num_opciones, min=min_ruido, max=ruido)
+  z <- seq(from=min_ruido, to=max_ruido, length.out=num_opciones)
+  z <- jitter(z, factor=0.23)
+  signos <- sample(c(-1, 1), size=num_opciones, replace=TRUE)
+  res <- c(x, x + (z * signos))
+  por_arriba <- res > 1
+  por_debajo <- res < 0
+  res[por_arriba] <- res[por_arriba] - 1
+  res[por_debajo] <- res[por_debajo] + 1
+  res
+}
